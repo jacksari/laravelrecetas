@@ -17,6 +17,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     @yield('styles')
+    
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -57,6 +58,14 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('perfiles.show', ['perfil' => Auth::user()->id]) }}"
+                                       >
+                                        Ver perfil
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('recetas.index') }}"
+                                        >
+                                         Ver recetas
+                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -74,9 +83,32 @@
             </div>
         </nav>
 
+        <nav class="navbar navbar-expand-md navbar-light categorias-bg">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#categorias" aria-controls="categorias" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                    <span class="navbar-toggler-icon"></span>
+                    Categorias
+                </button>
+                <div class="collapse navbar-collapse " id="categorias">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav w-100 d-flex justify-content-between">
+                        @foreach ($categorias as $categoria)
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('categorias.show', ['categoriaReceta' => $categoria->id ]) }}">
+                               {{ $categoria->titulo }}
+                            </a>
+                        </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        @yield('hero')
+
         <div class="container">
             <div class="row">
-                <div class="py-4 col-12">
+                <div class="pt-4 col-12">
                     @yield('botones')
                 </div>
 
@@ -86,6 +118,8 @@
             </div>
         </div>
     </div>
+    
+    @include('ui.footer')
 
     @yield('scripts')
 </body>
